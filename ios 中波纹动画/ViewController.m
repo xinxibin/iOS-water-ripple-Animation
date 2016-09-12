@@ -46,12 +46,12 @@
     [_testView.layer addSublayer:replicatorLayer];
     
     CABasicAnimation *opacityAnima = [CABasicAnimation animationWithKeyPath:@"opacity"];
-    opacityAnima.fromValue = @(0.0);
-    opacityAnima.toValue = @(0.3);
+    opacityAnima.fromValue = @(0.5);
+    opacityAnima.toValue = @(0.0);
     
     CABasicAnimation *scaleAnima = [CABasicAnimation animationWithKeyPath:@"transform"];
-    scaleAnima.toValue = [NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 0.0, 0.0, 0.0)];
-    scaleAnima.fromValue = [NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 2, 2, 0.0)];
+    scaleAnima.fromValue = [NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 0.0, 0.0, 0.0)];
+    scaleAnima.toValue = [NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 2, 2, 0.0)];
     
     CAAnimationGroup *groupAnima = [CAAnimationGroup animation];
     groupAnima.animations = @[opacityAnima, scaleAnima];
@@ -85,17 +85,18 @@
     shapeLayer.frame = CGRectMake(0, 0, width * 2, width * 2);
     shapeLayer.position = point;
     shapeLayer.path = [UIBezierPath bezierPathWithOvalInRect:shapeLayer.bounds].CGPath;
-    shapeLayer.fillColor = [UIColor redColor].CGColor;//填充色
+    shapeLayer.fillColor = [UIColor blackColor].CGColor;//填充色
+//    shapeLayer.strokeColor = [UIColor redColor].CGColor;
     shapeLayer.opacity = 0.0; // 层的透明度
     
     // 如果不设置下面的两句 就会有另外一种效果哦 可以下看看哦
-    shapeLayer.strokeColor = [UIColor blackColor].CGColor; // 在设置线宽的情况下有效
-    shapeLayer.lineWidth = 4;
+//    shapeLayer.strokeColor = [UIColor blackColor].CGColor; // 在设置线宽的情况下有效
+//    shapeLayer.lineWidth = 4;
     
     CAReplicatorLayer *replicatorLayer = [CAReplicatorLayer layer];
     replicatorLayer.frame = shapeLayer.bounds;
     replicatorLayer.instanceCount = 1;//创建副本的数量,包括源对象。
-    replicatorLayer.instanceDelay = 1;//复制副本之间的延迟
+    replicatorLayer.instanceDelay = 3;//复制副本之间的延迟
     [replicatorLayer addSublayer:shapeLayer];
     [self.view.layer addSublayer:replicatorLayer];
     
@@ -110,7 +111,7 @@
     
     CAAnimationGroup *groupAnima = [CAAnimationGroup animation];
     groupAnima.animations = @[opacityAnima, scaleAnimation];
-    groupAnima.duration = 1.0;
+    groupAnima.duration = 2.0;
     groupAnima.autoreverses = NO;
     groupAnima.repeatCount = 1;
     [shapeLayer addAnimation:groupAnima forKey:@"groupAnimation"];
